@@ -1,0 +1,8 @@
+openai
+whisper
+sounddevice
+scipy
+gtts
+langdetect
+fastapi
+uvicorn
