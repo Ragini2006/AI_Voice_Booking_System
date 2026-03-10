@@ -1,112 +1,286 @@
-# AI Voice Assistant: Your Intelligent Conversational Companion
+# AI Voice Booking System – Multilingual Event Assistant
 
-**Transform your digital interactions with your own AI Voice Assistant🎙️🤖**
+## Overview
 
-This project is an advanced AI Voice Assistant that integrates Text-to-Speech (TTS) and Speech-to-Text (STT) capabilities, allowing users to communicate directly with the agent and receive vocal responses. The assistant can utilize various tools to fulfill user requests, including managing calendars, contacts, emails, and performing web searches.
+This project implements a **voice-first AI assistant** that allows users to browse and book event tickets using natural speech. The assistant supports **multilingual voice interaction (English, Telugu, Hindi)** and performs event booking, availability checking, and smart recommendations.
 
-## Features
+The system demonstrates how **speech recognition, natural language processing, and database systems** can be integrated to create a fully voice-driven application.
 
-- **Speech-to-Text (STT)**: Convert spoken language into written text.
+Users can speak naturally such as:
 
-- **Text-to-Speech (TTS)**: Generate vocal responses from text input.
+> “Book two tickets for the photography workshop tomorrow”
 
-- **Vocal Interaction**: Engage in natural conversations with the AI assistant.
+The assistant will:
 
-- **Tool Integration**: Utilize built-in tools for calendar management, contact handling, email composition, web searching, and personal knowledge base access.
+1. Convert speech to text
+2. Extract booking intent
+3. Check event availability
+4. Confirm booking or suggest alternatives
+5. Respond using synthesized speech
 
-### Available Tools
+---
 
-- **CalendarTool**: Book events on Google Calendar with event name, date/time, and optional description.
+# Task Chosen
 
-- **AddContactTool**: Add new contacts to Google Contacts with name, phone number, and optional email address.
+### Task 03 – AI Voice Booking System
 
-- **FetchContactTool**: Retrieve contact information from Google Contacts by searching with the contact's name.
+I chose this task because it combines **multiple AI components** including speech recognition, natural language understanding, and recommendation systems.
 
-- **EmailingTool**: Send emails via Gmail by providing recipient name, subject, and body content.
+This project allowed me to demonstrate:
 
-- **SearchWebTool**: Perform web searches to gather up-to-date information.
+* Real-time voice interaction
+* Multilingual speech processing
+* AI-based intent extraction
+* Database-driven booking systems
+* Smart recommendation logic
 
-- **KnowledgeBaseTool**: Access the user's personal notes and saved information from your custom knowledge base (all the documents included in the `/files` folder)
+It closely resembles **real-world voice assistants such as Alexa or Google Assistant**, making it an interesting applied AI project.
 
-## How to Run
+---
 
-### Prerequisites
+# System Architecture
 
-- Python 3.9+
+The system follows a modular pipeline architecture.
 
-- Google API credentials (for Calendar, Contacts, and Gmail access)
-
-- Tavily API key (for web search)
-
-- Groq API key (for Llama3)
-
-- Google Gemini API key (for using the Gemini model)
-
-- Deepgram API key (for voice processing)
-
-- Necessary Python libraries (listed in `requirements.txt`)
-
-### Setup
-
-1. **Clone the repository:**
-
-```sh
-git clone https://github.com/yourusername/AI-Voice-assistant.git
-cd AI-Voice-assistant
+```
+User Voice
+   ↓
+Speech Recognition (SpeechRecognition / Whisper-ready)
+   ↓
+Intent Extraction (NLP Parser)
+   ↓
+Event Database (SQLite)
+   ↓
+Booking Engine
+   ↓
+Recommendation System
+   ↓
+Text-to-Speech (gTTS)
+   ↓
+Voice Response
 ```
 
-2. **Create and activate a virtual environment:**
+### Components
 
-```sh
-python -m venv venv
-source venv/bin/activate # On Windows use `venv\Scripts\activate`
+**Speech Recognition**
+
+* Converts spoken audio into text
+* Uses microphone input
+* Supports multilingual speech
+
+**Intent Extraction**
+
+* Extracts structured information from user commands
+* Identifies:
+
+  * event name
+  * number of tickets
+
+**Event Database**
+
+Stores event information including:
+
+* event name
+* category
+* date
+* time
+* total seats
+* booked seats
+
+**Booking Engine**
+
+Handles ticket booking and prevents overbooking.
+
+**Recommendation System**
+
+If an event is full, the assistant suggests **alternative events from the same category**.
+
+**Text-to-Speech**
+
+Converts the system response into voice output for a conversational experience.
+
+---
+
+# Project Structure
+
+```
+AI-Voice-Event-Booking
+│
+├── main.py
+├── requirements.txt
+├── README.md
+│
+├── database
+│   ├── events.db
+│   └── seed_events.py
+│
+├── speech
+│   ├── speech_to_text.py
+│   └── text_to_speech.py
+│
+├── nlp
+│   └── intent_parser.py
+│
+├── booking
+│   ├── check_availability.py
+│   ├── book_event.py
+│   └── recommend_events.py
 ```
 
-3. **Install the required packages:**
+---
 
-```sh
+# Setup Instructions
+
+---
+
+## 1. Install Dependencies
+
+```
 pip install -r requirements.txt
 ```
 
-4. **Set up environment variables:**
+Required libraries include:
 
-Create a `.env` file in the root directory of the project and add your API keys:
+* SpeechRecognition
+* PyAudio
+* gTTS
+* langdetect
+* sqlite3
+* googletrans
 
-```env
-GOOGLE_API_KEY=your_google_api_key
-DEEPGRAM_API_KEY=your_deepgram_api_key
-TAVILY_API_KEY=your_tavily_api_key
-GEMINI_API_KEY=your_gemini_api_key
-GROQ_API_KEY=your_groq_api_key
+---
+
+## 2. Seed the Event Database
+
+Initialize the database with sample events.
+
+```
+python database/seed_events.py
 ```
 
-5. **Configure Google API credentials:**
+This creates **10–15 sample events** across different categories.
 
-Follow Google's documentation to set up credentials for Calendar, Contacts, and Gmail APIs. Save the credentials file in a secure location and update the path in the configuration file.
+---
 
-### Running the Application
+## 3. Run the Assistant
 
-1. **Start a conversation with the assistant:**
+Start the voice assistant:
 
-```sh
+```
 python main.py
 ```
 
-The assistant is programmed to stop the conversation when the user says "goodbye".
+The assistant will start listening for voice commands.
 
-## Usage Examples
+---
 
-- "Schedule a meeting with John for tomorrow at 2 PM."
-- "Add a new contact: Jane Doe, phone number 555-1234."
-- "What's Mary's email address?"
-- "Send an email to Bob with the subject 'Project Update'."
-- "Search the web for recent news about artificial intelligence."
-- "What was the recipe I saved last week for chocolate chip cookies?"
+# Example Commands
 
-## Contributing
+Users can interact with the assistant using natural speech.
 
-Contributions are welcome! Please open an issue or submit a pull request for any changes.
+### English
 
-## Contact
+```
+Book 2 tickets for photography workshop
+```
 
-If you have any questions or suggestions, feel free to contact me at `aymenMir1001@gmail.com`.
+### Telugu
+
+```
+Photography workshop ki rendu tickets book cheyyi
+```
+
+### Hindi
+
+```
+Photography workshop ke liye 2 ticket book karo
+```
+
+---
+
+# Example Interaction
+
+```
+🎤 Listening...
+
+User: Book two tickets for photography workshop
+
+Assistant:
+Booking confirmed for Photography Workshop.
+2 tickets booked.
+Reference number BOOK-48231
+```
+
+If the event is full:
+
+```
+Assistant:
+Sorry, Photography Workshop is full.
+You can try Photography Advanced on 14 June at 5 PM.
+```
+
+---
+
+# Screenshots / Demo Video
+
+A demo video showing the assistant working end-to-end can be found here:
+
+https://drive.google.com/file/d/1KvkTsS1VrMOlc8qrf1MDxUD-vtBDoV0z/view
+
+The video demonstrates:
+
+* Voice input
+* Intent extraction
+* Booking confirmation
+* Recommendation system
+
+---
+
+# AI Components Used
+
+### Speech Recognition
+
+The system converts voice commands into text using a speech recognition model.
+
+### Natural Language Understanding
+
+The NLP module analyzes user commands to extract booking intent.
+
+### Recommendation System
+
+If an event is full, the assistant searches for similar events within the same category and suggests alternatives.
+
+### Text-to-Speech
+
+The assistant converts responses into audio, creating a fully voice-driven experience.
+
+---
+
+# Known Limitations
+
+* Language detection is heuristic and may occasionally misclassify mixed-language input.
+* Intent extraction currently uses rule-based parsing instead of a full LLM.
+* The recommendation system is based on category similarity only.
+* Background noise may affect speech recognition accuracy.
+
+---
+
+# Future Improvements
+
+With more time, the system could be improved by:
+
+* Integrating **OpenAI Whisper for speech recognition**
+* Using **GPT-4 or Gemini for intent extraction**
+* Adding **conversation memory**
+* Implementing **real-time event updates**
+* Adding a **web interface or mobile app**
+* Improving multilingual understanding
+
+---
+
+# Conclusion
+
+This project demonstrates how AI techniques can be combined to build a **voice-driven event booking assistant**. The system provides a natural conversational interface for event discovery and booking while ensuring that users are offered helpful alternatives when events are fully booked.
+
+The project highlights the potential of **AI-powered voice interfaces in real-world applications** such as event management, customer support, and ticket booking systems.
+
