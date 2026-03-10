@@ -24,7 +24,7 @@ The assistant will:
 
 ### Task 03 – AI Voice Booking System
 
-I chose this task because it combines **multiple AI components** including speech recognition, natural language understanding, and recommendation systems.
+I chose this task because it integrates multiple AI components such as speech recognition, natural language processing, and recommendation systems. I am familiar with these technologies and wanted to demonstrate my ability to build a practical project using them. The tech stack used in this project includes Python, SpeechRecognition, gTTS (Text-to-Speech), SQLite, and basic NLP for intent extraction.
 
 This project allowed me to demonstrate:
 
